@@ -1,16 +1,12 @@
-// const socket = io('ws://localhost:8080');
+const socket = io();
 
-// socket.on('message', text => {
+const form = document.getElementById('form');
+const input = document.getElementById('input');
 
-//     const el = document.createElement('li');
-//     el.innerHTML = text;
-//     document.querySelector('ul').appendChild(el)
-
-// });
-
-// document.querySelector('button').onclick = () => {
-
-//     const text = document.querySelector('input').value;
-//     socket.emit('message', text)
-    
-// }
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (input.value) {
+        socket.emit('chat message', input.value);
+        input.value = '';
+    }
+});

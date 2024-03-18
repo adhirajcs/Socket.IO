@@ -6,21 +6,25 @@ const { Server } = require('socket.io');
 
 const app = express();
 const server = createServer(app);
-const io = new Server(server);
+// const io = new Server(server);
+
+// for reconnection
+const io = new Server(server, {
+  connectionStateRecovery: {}
+});
+
 
 app.get('/', (req, res) => {
     res.sendFile(join(__dirname, '../app/index.html'));
 });
 
-io.on('connection', (socket) => {
-    
-  });
 
 io.on('connection', (socket) => {
     console.log('a user connected');
 
     socket.on('chat message', (msg) => {
-        console.log('message: ' + msg);
+        // console.log('message: ' + msg);
+        io.emit('chat message', msg);
     });
 
     socket.on('disconnect', () => {
